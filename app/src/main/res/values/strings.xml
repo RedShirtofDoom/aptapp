@@ -10,4 +10,6 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="Title">AptApp</string>
+    <string name="RegisterButton_LoginScreen">Register</string>
+    <string name="LoginButton_LoginScreen">Login</string>
 </resources>
