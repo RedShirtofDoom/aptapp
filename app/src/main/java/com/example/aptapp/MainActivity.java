@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         registerButton_LoginScreen = findViewById(R.id.registerButton);
 
+
         registerButton_LoginScreen.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -12,4 +12,5 @@
     <string name="Title">AptApp</string>
     <string name="RegisterButton_LoginScreen">Register</string>
     <string name="LoginButton_LoginScreen">Login</string>
+    <string name="title_activity_map_apartment">Map</string>
 </resources>
