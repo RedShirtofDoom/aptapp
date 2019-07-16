@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.aptapp.ui.login.LoginActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button registerButton_LoginScreen;
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void openRegisterScreen(){
 
-        //Intent intent = new Intent(this, )
+        Intent intent = new Intent(this, LoginActivity.class);
+        startActivity(intent);
     }
 }
