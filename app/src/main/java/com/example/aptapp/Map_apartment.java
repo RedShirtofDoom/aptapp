@@ -1,8 +1,12 @@
 package com.example.aptapp;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentActivity;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,7 +15,7 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class Map_apartment extends FragmentActivity implements OnMapReadyCallback {
+public class Map_apartment extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
 
@@ -43,21 +47,51 @@ public class Map_apartment extends FragmentActivity implements OnMapReadyCallbac
     //coordinates for common apartments near UTA campus
 //32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
 //32.730593, -97.119917 === university village
-//32.731901, -97.121427   ==== meadow run
+//32.731945, -97.121558   ==== meadow run
+
+    //When any line shows error for missing package, click on the keyword underlined red, press Alt+Enter, it imports correct library or package in Android studio
 
     //function created with dummy coordinates entered for the Meadow Run Apartments
 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng meadow_run = new LatLng(32.731901, -97.121427);
+        LatLng meadow_run = new LatLng(32.731945, -97.121558);
         mMap.addMarker(new MarkerOptions().position(meadow_run).title("Meadow Run Apartments"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meadow_run, 10F));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.map_options, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Change the map type based on the user's selection.
+        switch (item.getItemId()) {
+            case R.id.normal_map:
+                mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+                return true;
+            case R.id.hybrid_map:
+                mMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+                return true;
+            case R.id.satellite_map:
+                mMap.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
+                return true;
+            case R.id.terrain_map:
+                mMap.setMapType(GoogleMap.MAP_TYPE_TERRAIN);
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
 
 
 //sample function for the University Village's apartments
-
+/*
     public void onMapReady2(GoogleMap googleMap2) {
         mMap = googleMap2;
 
@@ -66,5 +100,5 @@ public class Map_apartment extends FragmentActivity implements OnMapReadyCallbac
         mMap.addMarker(new MarkerOptions().position(university_village).title("University Village Apartments"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(university_village,10F));
     }
-
+*/
 }
