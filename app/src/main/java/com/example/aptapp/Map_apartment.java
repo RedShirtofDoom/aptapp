@@ -26,6 +26,7 @@ public class Map_apartment extends FragmentActivity implements OnMapReadyCallbac
     }
 
 
+    
     /**
      * Manipulates the map once available.
      * This callback is triggered when the map is ready to be used.
