@@ -40,16 +40,31 @@ public class Map_apartment extends FragmentActivity implements OnMapReadyCallbac
     @Override
 
 
+    //coordinates for common apartments near UTA campus
 //32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
-    ///32.730593, -97.119917 === university village
+//32.730593, -97.119917 === university village
 //32.731901, -97.121427   ==== meadow run
+
+    //function created with dummy coordinates entered for the Meadow Run Apartments
 
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng meadow_run = new LatLng(32.731901, -97.121427);
+        mMap.addMarker(new MarkerOptions().position(meadow_run).title("Meadow Run Apartments"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meadow_run, 10F));
+    }
+
+
+
+//sample function for the University Village's apartments
+
+    public void onMapReady2(GoogleMap googleMap2) {
+        mMap = googleMap2;
 
         // Add a marker in Sydney and move the camera
-        LatLng meadow_run = new LatLng(32.731901, -97.121427);
-        mMap.addMarker(new MarkerOptions().position(meadow_run).title("Marker in Meadow Run Apartments"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(meadow_run));
+        LatLng university_village = new LatLng(32.730593, -97.119917);
+        mMap.addMarker(new MarkerOptions().position(university_village).title("University Village Apartments"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(university_village,10F));
     }
+
 }
