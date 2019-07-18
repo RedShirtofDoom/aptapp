@@ -36,12 +36,16 @@ public class Map_apartment extends FragmentActivity implements OnMapReadyCallbac
      * installed Google Play services and returned to the app.
      */
     @Override
+//32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
+    ///32.730593, -97.119917 === university village
+//32.731901, -97.121427   ==== meadow run
+
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
         // Add a marker in Sydney and move the camera
-        LatLng sydney = new LatLng(-34, 151);
-        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        LatLng meadow_run = new LatLng(32.731901, -97.121427);
+        mMap.addMarker(new MarkerOptions().position(meadow_run).title("Marker in Meadow Run Apartments"));
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(meadow_run));
     }
 }
