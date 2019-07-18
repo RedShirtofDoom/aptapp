@@ -38,7 +38,8 @@ public class Map_apartment extends FragmentActivity implements OnMapReadyCallbac
      * installed Google Play services and returned to the app.
      */
     @Override
-    
+
+
 //32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
     ///32.730593, -97.119917 === university village
 //32.731901, -97.121427   ==== meadow run
