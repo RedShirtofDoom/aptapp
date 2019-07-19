@@ -25,13 +25,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 openRegisterScreen();
+
             }
         });
+
+        openGoogleMaps();
     }
 
     public void openRegisterScreen(){
 
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
+
+
+    }
+
+
+    public void openGoogleMaps(){
+        Intent intent2 = new Intent (this,Map_apartment.class);
+        startActivity(intent2);
     }
 }
