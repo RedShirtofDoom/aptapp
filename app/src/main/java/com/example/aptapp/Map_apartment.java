@@ -1,8 +1,13 @@
 package com.example.aptapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -19,6 +24,7 @@ import com.google.android.gms.maps.model.PointOfInterest;
 
 public class Map_apartment extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final int REQUEST_LOCATION_PERMISSION = 0;
     private GoogleMap mMap;
     private void setPoiClick(final GoogleMap map)
     {
@@ -32,6 +38,19 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
             }
         });
     }
+
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION_PERMISSION);
+        }
+    }
+
 
 
     @Override
@@ -60,7 +79,7 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
     //coordinates for common apartments near UTA campus
 //32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
 //32.730593, -97.119917 === university village
-//32.731945, -97.121558   ==== meadow run
+//32.731945, -97.121558   === meadow run
 
     //When any line shows error for missing package, click on the keyword underlined red, press Alt+Enter, it imports correct library or package in Android studio
 
@@ -72,6 +91,23 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
         mMap.addMarker(new MarkerOptions().position(meadow_run).title("Meadow Run Apartments"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meadow_run, 10F));
         setPoiClick(mMap);
+        enableMyLocation();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        // Check if location permissions are granted and if so enable the
+        // location data layer.
+        switch (requestCode) {
+            case REQUEST_LOCATION_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0]
+                        == PackageManager.PERMISSION_GRANTED) {
+                    enableMyLocation();
+                    break;
+                }
+        }
     }
 
     @Override
