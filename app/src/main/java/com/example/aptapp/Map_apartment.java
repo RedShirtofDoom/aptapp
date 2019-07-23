@@ -13,11 +13,26 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
 
 public class Map_apartment extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private void setPoiClick(final GoogleMap map)
+    {
+        map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
+            @Override
+            public void onPoiClick(PointOfInterest poi)
+            {
+                Marker poiMarker = mMap.addMarker(new MarkerOptions()
+                        .position(poi.latLng).title(poi.name));
+                poiMarker.showInfoWindow();
+            }
+        });
+    }
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +43,6 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
-
-
 
 
     /**
@@ -58,6 +71,7 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
         LatLng meadow_run = new LatLng(32.731945, -97.121558);
         mMap.addMarker(new MarkerOptions().position(meadow_run).title("Meadow Run Apartments"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meadow_run, 10F));
+        setPoiClick(mMap);
     }
 
     @Override
