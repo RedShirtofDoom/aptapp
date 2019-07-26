@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.StreetViewPanoramaOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -26,6 +28,20 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
 
     private static final int REQUEST_LOCATION_PERMISSION = 0;
     private GoogleMap mMap;
+
+    private void setInfoWindowClicktoPanaroma(GoogleMap map)
+    {
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                if(marker.getTag() == "poi")
+                {
+                    StreetViewPanoramaOptions options = new StreetViewPanoramaOptions().position(marker.getPosition());
+                }
+            }
+        });
+    }
+
     private void setPoiClick(final GoogleMap map)
     {
         map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
@@ -35,6 +51,7 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
                 Marker poiMarker = mMap.addMarker(new MarkerOptions()
                         .position(poi.latLng).title(poi.name));
                 poiMarker.showInfoWindow();
+                poiMarker.setTag("poi");
             }
         });
     }
@@ -58,9 +75,10 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_apartment);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();// getSupportFragmentManager()
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,mapFragment).commit();
+        //  .findFragmentById(R.id.map);
+        mapFragment.getMapAsync( this);
     }
 
 
@@ -75,11 +93,10 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
      */
     @Override
 
-
     //coordinates for common apartments near UTA campus
-//32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
-//32.730593, -97.119917 === university village
-//32.731945, -97.121558   === meadow run
+    //32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
+    //32.730593, -97.119917 === university village
+    //32.731945, -97.121558   === meadow run
 
     //When any line shows error for missing package, click on the keyword underlined red, press Alt+Enter, it imports correct library or package in Android studio
 
