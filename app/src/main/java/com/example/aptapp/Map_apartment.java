@@ -1,8 +1,13 @@
 package com.example.aptapp;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentActivity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -11,25 +16,70 @@ import android.view.MenuItem;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.StreetViewPanoramaOptions;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.maps.model.PointOfInterest;
 
 public class Map_apartment extends AppCompatActivity implements OnMapReadyCallback {
 
+    private static final int REQUEST_LOCATION_PERMISSION = 0;
     private GoogleMap mMap;
+
+    private void setInfoWindowClicktoPanaroma(GoogleMap map)
+    {
+        map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                if(marker.getTag() == "poi")
+                {
+                    StreetViewPanoramaOptions options = new StreetViewPanoramaOptions().position(marker.getPosition());
+                }
+            }
+        });
+    }
+
+    private void setPoiClick(final GoogleMap map)
+    {
+        map.setOnPoiClickListener(new GoogleMap.OnPoiClickListener() {
+            @Override
+            public void onPoiClick(PointOfInterest poi)
+            {
+                Marker poiMarker = mMap.addMarker(new MarkerOptions()
+                        .position(poi.latLng).title(poi.name));
+                poiMarker.showInfoWindow();
+                poiMarker.setTag("poi");
+            }
+        });
+    }
+
+    private void enableMyLocation() {
+        if (ContextCompat.checkSelfPermission(this,
+                Manifest.permission.ACCESS_FINE_LOCATION)
+                == PackageManager.PERMISSION_GRANTED) {
+            mMap.setMyLocationEnabled(true);
+        } else {
+            ActivityCompat.requestPermissions(this, new String[]
+                            {Manifest.permission.ACCESS_FINE_LOCATION},
+                    REQUEST_LOCATION_PERMISSION);
+        }
+    }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map_apartment);
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+        SupportMapFragment mapFragment = SupportMapFragment.newInstance();// getSupportFragmentManager()
+        getSupportFragmentManager().beginTransaction().add(R.id.fragment_container,mapFragment).commit();
+        //  .findFragmentById(R.id.map);
+        mapFragment.getMapAsync( this);
     }
-
-
 
 
     /**
@@ -43,11 +93,10 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
      */
     @Override
 
-
     //coordinates for common apartments near UTA campus
-//32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
-//32.730593, -97.119917 === university village
-//32.731945, -97.121558   ==== meadow run
+    //32°44'02.5"N 97°07'09.6"W   == timberbrook apartment
+    //32.730593, -97.119917 === university village
+    //32.731945, -97.121558   === meadow run
 
     //When any line shows error for missing package, click on the keyword underlined red, press Alt+Enter, it imports correct library or package in Android studio
 
@@ -58,6 +107,24 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
         LatLng meadow_run = new LatLng(32.731945, -97.121558);
         mMap.addMarker(new MarkerOptions().position(meadow_run).title("Meadow Run Apartments"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meadow_run, 10F));
+        setPoiClick(mMap);
+        enableMyLocation();
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode,
+                                           @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
+        // Check if location permissions are granted and if so enable the
+        // location data layer.
+        switch (requestCode) {
+            case REQUEST_LOCATION_PERMISSION:
+                if (grantResults.length > 0
+                        && grantResults[0]
+                        == PackageManager.PERMISSION_GRANTED) {
+                    enableMyLocation();
+                    break;
+                }
+        }
     }
 
     @Override
