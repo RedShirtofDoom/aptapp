@@ -24,6 +24,7 @@ import com.google.android.gms.maps.model.PointOfInterest;
 
 public class Map_apartment extends AppCompatActivity implements OnMapReadyCallback {
 
+    
     private static final int REQUEST_LOCATION_PERMISSION = 0;
     private GoogleMap mMap;
     private void setPoiClick(final GoogleMap map)
