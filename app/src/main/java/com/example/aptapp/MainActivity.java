@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+
     public void openGoogleMaps(){
         Intent intent2 = new Intent (this,Map_apartment.class);
         startActivity(intent2);
