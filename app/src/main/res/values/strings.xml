@@ -10,4 +10,7 @@
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
     <string name="Title">AptApp</string>
+    <string name="textview">TextView</string>
+    <string name="create_a_post">Create a post</string>
+    <string name="profile">Profile</string>
 </resources>
