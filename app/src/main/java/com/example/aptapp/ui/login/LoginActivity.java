@@ -2,6 +2,7 @@ package com.example.aptapp.ui.login;
 
 import android.app.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
@@ -25,6 +26,12 @@ import android.widget.Toast;
 import com.example.aptapp.R;
 import com.example.aptapp.ui.login.LoginViewModel;
 import com.example.aptapp.ui.login.LoginViewModelFactory;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 /**
  * Public Class Login Activity Used for Registering Credentials for app
  *
@@ -44,6 +51,8 @@ public class LoginActivity extends AppCompatActivity {
         final EditText passwordEditText = findViewById(R.id.password);
         final Button registerButton = findViewById(R.id.registerCredentials);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
+
+        final FirebaseAuth fbAuth = FirebaseAuth.getInstance();
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
@@ -116,11 +125,34 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
-                loginViewModel.login(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                fbAuth.createUserWithEmailAndPassword(usernameEditText.getText().toString(), passwordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<AuthResult>(){
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task){
+                        loadingProgressBar.setVisibility(View.GONE);
+                        if (task.isSuccessful()){
+                            Toast.makeText(LoginActivity.this, "Register Successful", Toast.LENGTH_LONG).show();
+                            usernameEditText.setText("");
+                            passwordEditText.setText("");
+
+                        }else {
+                            Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                });
+                //loginViewModel.login(usernameEditText.getText().toString(),
+                       // passwordEditText.getText().toString());
             }
         });
     }
+    /*
+    @Override
+    public void onStart(){
+        super.onStart();
+        //check if user is signed in (non-null) and update UI
+        FirebaseUser currentUser = fbAuth.getCurrentUser();
+
+    }*/
 
     private void updateUiWithUser(LoggedInUserView model) {
         String welcome = getString(R.string.welcome) + model.getDisplayName();

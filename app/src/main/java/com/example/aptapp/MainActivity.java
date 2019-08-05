@@ -8,10 +8,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.example.aptapp.ui.login.LoginActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
     private Button registerButton_LoginScreen;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +22,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         registerButton_LoginScreen = findViewById(R.id.registerButton);
+
+        mAuth = FirebaseAuth.getInstance();
 
 
         registerButton_LoginScreen.setOnClickListener(new View.OnClickListener() {
@@ -29,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        openGoogleMaps();
+        //openGoogleMaps();
     }
 
     public void openRegisterScreen(){
@@ -38,6 +43,13 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
 
+    }
+    @Override
+    public void onStart()
+    {
+        super.onStart();
+        //FirebaseUser currentUser = mAuth.getCurrentUser();
+        //UpdateUI(currentUser);
     }
 
 
