@@ -19,6 +19,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.StreetViewPanorama;
 import com.google.android.gms.maps.StreetViewPanoramaOptions;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.PointOfInterest;
 
 public class Map_apartment extends AppCompatActivity implements OnMapReadyCallback {
 
+    
     private static final int REQUEST_LOCATION_PERMISSION = 0;
     private GoogleMap mMap;
 
@@ -37,6 +39,15 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
                 if(marker.getTag() == "poi")
                 {
                     StreetViewPanoramaOptions options = new StreetViewPanoramaOptions().position(marker.getPosition());
+
+
+                    SupportStreetViewPanoramaFragment streetViewFragment = SupportStreetViewPanoramaFragment
+                            .newInstance(options);
+
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_container,
+                                    streetViewFragment)
+                            .addToBackStack(null).commit();
                 }
             }
         });
@@ -108,7 +119,8 @@ public class Map_apartment extends AppCompatActivity implements OnMapReadyCallba
         mMap.addMarker(new MarkerOptions().position(meadow_run).title("Meadow Run Apartments"));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(meadow_run, 10F));
         setPoiClick(mMap);
-        enableMyLocation();
+      //  enableMyLocation(mMap);
+       // setInfoWindowClicktoPanaroma(mMap);
     }
     @Override
     public void onRequestPermissionsResult(int requestCode,
