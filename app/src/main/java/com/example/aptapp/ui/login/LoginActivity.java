@@ -133,6 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.makeText(LoginActivity.this, "Register Successful", Toast.LENGTH_LONG).show();
                             usernameEditText.setText("");
                             passwordEditText.setText("");
+                            finish();
 
                         }else {
                             Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
