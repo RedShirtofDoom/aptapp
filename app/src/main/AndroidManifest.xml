@@ -44,6 +44,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".test_activity" />
+        <activity android:name=".PostActivity" />
     </application>
 
 </manifest>
