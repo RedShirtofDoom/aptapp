@@ -6,6 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
     <TextView
         android:id="@+id/textView"
         android:layout_width="59dp"
@@ -82,7 +87,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="56dp"
         android:ems="10"
-        android:hint="Username"
+        android:hint="email"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/PasswordField"
         app:layout_constraintEnd_toEndOf="parent"
